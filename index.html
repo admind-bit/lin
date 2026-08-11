@@ -3,470 +3,894 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>图片素材 - 风景 - CC0.CN</title>
+<title>CC0.CN - 免费商用图片素材</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
-    font-family: "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
-    background: #fff;
+    font-family: "PingFang SC","Microsoft YaHei","Helvetica Neue",Arial,sans-serif;
+    background: #f5f5f5;
     color: #333;
     font-size: 14px;
   }
   a { text-decoration: none; color: inherit; }
 
-  /* ===== Top Bar ===== */
+  /* ===== Auth Pages ===== */
+  .auth-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #ff4d2e 0%, #ff8a5c 100%);
+  }
+  .auth-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 40px 36px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  }
+  .auth-card h2 {
+    font-size: 26px;
+    color: #333;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  .auth-card .subtitle {
+    color: #999;
+    font-size: 13px;
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  .form-group {
+    margin-bottom: 18px;
+  }
+  .form-group label {
+    display: block;
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+  .form-group input {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color .2s;
+  }
+  .form-group input:focus {
+    outline: none;
+    border-color: #ff4d2e;
+  }
+  .btn-primary {
+    width: 100%;
+    padding: 12px;
+    background: #ff4d2e;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s;
+    margin-top: 6px;
+  }
+  .btn-primary:hover { background: #e03d1f; }
+  .auth-links {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 18px;
+    font-size: 13px;
+    color: #666;
+  }
+  .auth-links a { color: #ff4d2e; font-weight: 500; }
+  .auth-links a:hover { text-decoration: underline; }
+  .back-link {
+    display: block;
+    text-align: center;
+    margin-top: 16px;
+    font-size: 13px;
+    color: #999;
+  }
+  .back-link a { color: #666; }
+  .error-msg {
+    color: #e53935;
+    font-size: 12px;
+    margin-top: 4px;
+    display: none;
+  }
+  .success-msg {
+    color: #43a047;
+    font-size: 13px;
+    text-align: center;
+    margin-bottom: 12px;
+    display: none;
+  }
+
+  /* ===== Main App ===== */
+  .app-container { display: none; }
+  .app-container.active { display: block; }
+
+  /* Top Bar */
   .topbar {
     background: #fff;
     border-bottom: 1px solid #f0f0f0;
-    padding: 18px 30px;
+    height: 56px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 0 24px;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
   }
-  .logo {
+  .logo-wrap { display: flex; align-items: center; gap: 10px; }
+  .logo-box {
+    width: 32px; height: 32px;
+    background: #ff4d2e;
+    border-radius: 4px;
     display: flex;
     align-items: center;
-    gap: 10px;
-  }
-  .logo-mark {
-    background: #ff4d2e;
+    justify-content: center;
     color: #fff;
     font-weight: 700;
-    padding: 6px 10px;
-    border-radius: 4px;
-    font-size: 18px;
-    letter-spacing: 1px;
-  }
-  .logo-text {
-    color: #ff4d2e;
-    font-weight: 700;
-    font-size: 20px;
-  }
-  .logo-sub {
-    color: #999;
     font-size: 12px;
-    line-height: 1.3;
-    border-left: 1px solid #e0e0e0;
-    padding-left: 10px;
   }
-  .topbar-right {
-    display: flex;
-    gap: 25px;
-    color: #666;
-    font-size: 13px;
+  .logo-text { line-height: 1.2; }
+  .logo-text .main { font-size: 18px; font-weight: 700; color: #ff4d2e; letter-spacing: 1px; }
+  .logo-text .sub { font-size: 11px; color: #999; }
+  .top-links { display: flex; gap: 20px; align-items: center; }
+  .top-links a { color: #666; font-size: 13px; }
+  .top-links a:hover { color: #ff4d2e; }
+  .top-links .user-info { display: flex; align-items: center; gap: 12px; }
+  .top-links .user-info span { font-size: 13px; color: #333; }
+  .top-links .logout-btn {
+    padding: 5px 12px;
+    border: 1px solid #ff4d2e;
+    color: #ff4d2e;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    background: #fff;
   }
-  .topbar-right a:hover { color: #ff4d2e; }
+  .top-links .logout-btn:hover { background: #ff4d2e; color: #fff; }
 
-  /* ===== Sidebar (Left) ===== */
-  .layout {
+  /* Layout */
+  .main-layout {
     display: flex;
+    padding-top: 56px;
+    min-height: 100vh;
   }
   .sidebar {
     width: 200px;
     background: #fff;
-    border-right: 1px solid #f5f5f5;
-    padding: 22px 0;
-    flex-shrink: 0;
+    border-right: 1px solid #f0f0f0;
+    padding: 16px 0;
+    position: fixed;
+    top: 56px; left: 0; bottom: 0;
+    overflow-y: auto;
+    z-index: 90;
   }
-  .nav-home {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 24px;
-    color: #555;
-    font-size: 14px;
+  .sidebar-nav { padding: 0 16px; margin-bottom: 20px; }
+  .sidebar-nav a {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 12px; border-radius: 4px;
+    font-size: 13px; color: #333; margin-bottom: 2px;
   }
-  .nav-home .ic-home {
-    width: 16px; height: 16px;
-    border: 1.5px solid #555;
-    border-radius: 3px;
-    position: relative;
+  .sidebar-nav a:hover { background: #f5f5f5; color: #ff4d2e; }
+  .sidebar-nav a svg { width: 16px; height: 16px; color: #999; }
+  .sidebar-section-title {
+    padding: 0 16px;
+    font-size: 15px; font-weight: 700; color: #333;
+    margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
   }
-  .nav-home .ic-home::after {
-    content: ""; position: absolute;
-    top: 2px; left: 2px; right: 2px; bottom: 2px;
-    background: #555; border-radius: 1px;
+  .sidebar-section-title::before {
+    content: '';
+    width: 4px; height: 16px;
+    background: #ff4d2e;
+    border-radius: 2px;
   }
-  .section-title {
-    padding: 18px 24px 12px;
-    font-size: 16px;
-    font-weight: 700;
-    color: #222;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .section-title::before {
-    content: ""; width: 4px; height: 16px;
-    background: #ff4d2e; border-radius: 2px;
-  }
-  .cat-list {
+  .cat-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    padding: 0 8px;
+    gap: 8px;
+    padding: 0 16px;
   }
-  .cat-list a {
-    padding: 8px 12px;
-    color: #555;
-    font-size: 13px;
-    border-radius: 4px;
+  .cat-grid .cat-item {
+    padding: 7px 0;
     text-align: center;
-    transition: all 0.15s;
-  }
-  .cat-list a:hover {
-    background: #fff5f2;
-    color: #ff4d2e;
-  }
-  .cat-list a.active {
-    background: #ff4d2e;
-    color: #fff;
-  }
-
-  /* ===== Main Area ===== */
-  .main {
-    flex: 1;
-    min-width: 0;
-  }
-  /* Top Category Tabs */
-  .cat-tabs {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0;
-    padding: 14px 24px;
-    background: #fff;
-    border-bottom: 1px solid #f5f5f5;
-  }
-  .cat-tabs a {
-    padding: 6px 14px;
-    color: #555;
-    font-size: 13px;
     border-radius: 4px;
-    transition: all 0.15s;
+    font-size: 13px;
+    color: #555;
+    cursor: pointer;
+    transition: all .2s;
   }
-  .cat-tabs a:hover { color: #ff4d2e; }
-  .cat-tabs a.active {
+  .cat-grid .cat-item:hover { color: #ff4d2e; background: #fff5f3; }
+  .cat-grid .cat-item.active {
     background: #ff4d2e;
     color: #fff;
   }
 
-  /* ===== Image Grid ===== */
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    padding: 24px;
+  /* Content */
+  .content-area {
+    margin-left: 200px;
+    flex: 1;
+    padding: 20px 24px;
   }
-  .card {
+
+  /* Tag Bar */
+  .tag-bar {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .tag-bar .tag {
+    padding: 6px 14px;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #555;
     background: #fff;
-    border-radius: 6px;
+    border: 1px solid #eee;
+    cursor: pointer;
+    transition: all .2s;
+    white-space: nowrap;
+  }
+  .tag-bar .tag:hover { color: #ff4d2e; border-color: #ff4d2e; }
+  .tag-bar .tag.active {
+    background: #ff4d2e;
+    color: #fff;
+    border-color: #ff4d2e;
+  }
+
+  /* Gallery */
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .gallery .card {
+    background: #fff;
+    border-radius: 8px;
     overflow: hidden;
-    transition: all 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    transition: box-shadow .2s;
     cursor: pointer;
   }
-  .card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-  }
-  .card-img {
+  .gallery .card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+  .gallery .card-img {
     width: 100%;
     aspect-ratio: 16 / 10;
     background: #eee;
     background-size: cover;
     background-position: center;
   }
-  /* Featured first card spans 2 cols for visual weight */
-  .card.featured {
-    grid-column: span 2;
-    grid-row: span 2;
+  .gallery .card-body { padding: 12px 14px; }
+  .gallery .card-title {
+    font-size: 14px; font-weight: 500;
+    color: #333; margin-bottom: 8px;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
   }
-  .card.featured .card-img {
-    aspect-ratio: 16 / 10;
+  .gallery .card-meta {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 12px; color: #999;
   }
-  .card-body {
-    padding: 12px 4px 8px;
-  }
-  .card-title {
-    font-size: 15px;
+  .gallery .badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 11px; color: #ff4d2e;
     font-weight: 600;
-    color: #222;
-    margin-bottom: 10px;
-    line-height: 1.4;
+  }
+  .gallery .badge::before {
+    content: ''; width: 6px; height: 6px;
+    background: #ff4d2e; border-radius: 50%;
+  }
+
+  /* Category Detail Page */
+  .cat-detail {
+    display: none;
+  }
+  .cat-detail.active { display: block; }
+  .cat-detail-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 20px;
+  }
+  .cat-detail-header .back-btn {
+    padding: 6px 14px;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #555;
+    cursor: pointer;
+  }
+  .cat-detail-header .back-btn:hover { border-color: #ff4d2e; color: #ff4d2e; }
+  .cat-detail-header h2 { font-size: 20px; color: #333; }
+  .detail-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .detail-card {
+    background: #fff;
+    border-radius: 12px;
     overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   }
-  .card-meta {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: #999;
-    font-size: 12px;
+  .detail-card .img-wrap {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    background: #eee;
+    background-size: cover;
+    background-position: center;
   }
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 2px 8px;
-    background: #f5f5f5;
-    border-radius: 3px;
-    color: #777;
-    font-size: 11px;
+  .detail-card .info {
+    padding: 16px;
   }
-  .badge::before {
-    content: ""; width: 10px; height: 10px;
+  .detail-card .info h3 {
+    font-size: 16px; font-weight: 600; color: #333;
+    margin-bottom: 8px;
+  }
+  .detail-card .info p {
+    font-size: 13px; color: #999;
+  }
+
+  /* Section Title in Home */
+  .section-title {
+    font-size: 18px; font-weight: 700; color: #333;
+    margin: 24px 0 14px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-title::before {
+    content: '';
+    width: 4px; height: 18px;
     background: #ff4d2e;
     border-radius: 2px;
-    display: inline-block;
   }
-  .size {
-    color: #999;
-    font-size: 12px;
+  .home-cat-section {
+    margin-bottom: 20px;
+  }
+  .home-cat-section .cat-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .home-cat-section .cat-header h3 {
+    font-size: 15px; font-weight: 600; color: #444;
+  }
+  .home-cat-section .cat-header .view-all {
+    font-size: 13px; color: #ff4d2e; cursor: pointer;
+  }
+  .home-cat-section .cat-header .view-all:hover { text-decoration: underline; }
+  .mini-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  .mini-card {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    cursor: pointer;
+    transition: box-shadow .2s;
+  }
+  .mini-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+  .mini-card .img {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    background: #eee;
+    background-size: cover;
+    background-position: center;
+  }
+  .mini-card .meta {
+    padding: 8px 10px;
+    font-size: 12px; color: #666;
   }
 
-  /* Footer / Pagination */
-  .footer {
-    text-align: center;
-    padding: 30px 0 60px;
-    color: #999;
-    font-size: 13px;
-    border-top: 1px solid #f5f5f5;
-    margin-top: 20px;
-  }
-  .footer .links {
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-  }
-  .footer .links a:hover { color: #ff4d2e; }
-
-  /* Responsive */
-  @media (max-width: 1100px) {
-    .grid { grid-template-columns: repeat(3, 1fr); }
-  }
-  @media (max-width: 800px) {
-    .sidebar { width: 160px; }
-    .grid { grid-template-columns: repeat(2, 1fr); }
-    .cat-list { grid-template-columns: 1fr; }
+  @media (max-width: 900px) {
+    .sidebar { display: none; }
+    .content-area { margin-left: 0; }
+    .mini-grid { grid-template-columns: repeat(2, 1fr); }
+    .detail-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
 
-<!-- Top Bar -->
-<div class="topbar">
-  <div class="logo">
-    <span class="logo-mark">CC</span>
-    <span class="logo-text">0.CN</span>
-    <span class="logo-sub">版权免费<br>素材图片网站</span>
-  </div>
-  <div class="topbar-right">
-    <a href="#">登录</a>
-    <a href="#">注册</a>
-    <a href="#">投稿</a>
-    <a href="#">关于</a>
-  </div>
-</div>
+<div id="app"></div>
 
-<div class="layout">
+<script>
+// ========== IMAGE DATA ==========
+const imageData = {
+  "山水": ["https://www.sourcesplash.com/i/088c5fffea9c","https://www.sourcesplash.com/i/40f036435501"],
+  "自然": ["https://www.sourcesplash.com/i/807057d5dc88","https://www.sourcesplash.com/i/817ddc8ea2a9"],
+  "季节": ["https://www.sourcesplash.com/i/36afd2fa1d4e","https://www.sourcesplash.com/i/7d73a40d32cf"],
+  "植物": ["https://www.sourcesplash.com/i/c97ddb36a7bf","https://www.sourcesplash.com/i/39301933b2c9"],
+  "风景": ["https://www.sourcesplash.com/i/242370f7dd22","https://www.sourcesplash.com/i/242370f7dd22"],
+  "物件": ["https://www.sourcesplash.com/i/bad4b6e742e3","https://www.sourcesplash.com/i/f18b5b3a662f"],
+  "美食": ["https://www.sourcesplash.com/i/75bec1b1e7ca","https://www.sourcesplash.com/i/993cfa5c1ce4"],
+  "节庆": ["https://www.sourcesplash.com/i/eb2a2f444688","https://www.sourcesplash.com/i/241ae1cce991"],
+  "动植物": ["https://www.sourcesplash.com/i/f562a67b8e75","https://www.sourcesplash.com/i/9c5336e6c50d"],
+  "建筑": ["https://www.sourcesplash.com/i/5161ee3e5b61","https://www.sourcesplash.com/i/898a036314ec"],
+  "动物": ["https://www.sourcesplash.com/i/993c90256278","https://www.sourcesplash.com/i/67c270a33583"],
+  "交通": ["https://www.sourcesplash.com/i/e520c604edb5","https://www.sourcesplash.com/i/18a9ddfb7fa0"],
+  "运动": ["https://www.sourcesplash.com/i/51d640d1678e","https://www.sourcesplash.com/i/b9bb4543b92d"],
+  "人物": ["https://www.sourcesplash.com/i/db9175da3f40","https://www.sourcesplash.com/i/c384c5cf44b5"],
+  "更多": ["https://www.sourcesplash.com/i/8a0f4c13886f","https://www.sourcesplash.com/i/33942a55b737"],
+  "热门": ["https://www.sourcesplash.com/i/518065cac2d8","https://www.sourcesplash.com/i/c9fc9279ff3a"],
+  "林荫道": ["https://www.sourcesplash.com/i/a26ab3ba1b73","https://www.sourcesplash.com/i/f501c59ea501"],
+  "平原": ["https://www.sourcesplash.com/i/b697ea8cb013","https://www.sourcesplash.com/i/3ea916759744"],
+  "秋天稻田": ["https://www.sourcesplash.com/i/8d06ed2c49c9","https://www.sourcesplash.com/i/527aa5241866"],
+  "山的图片": ["https://www.sourcesplash.com/i/2bffe6b93e9a","https://www.sourcesplash.com/i/b697ea8cb013"],
+  "花海": ["https://www.sourcesplash.com/i/292c45095276","https://www.sourcesplash.com/i/c344d7091067"],
+  "山峰": ["https://www.sourcesplash.com/i/d2b208b6a425","https://www.sourcesplash.com/i/7acb7d3d1740"],
+  "雪山": ["https://www.sourcesplash.com/i/5579fc5174fe","https://www.sourcesplash.com/i/8a61fb118809"],
+  "农业风光": ["https://www.sourcesplash.com/i/116e64404fe0","https://www.sourcesplash.com/i/071592a9c20b"],
+  "绿色植被": ["https://www.sourcesplash.com/i/542306058e47","https://www.sourcesplash.com/i/1bf31dc3b714"],
+  "草地": ["https://www.sourcesplash.com/i/ef0f8a119796","https://www.sourcesplash.com/i/b9b48fa20784"],
+  "树林": ["https://www.sourcesplash.com/i/e7be6283ecf8","https://www.sourcesplash.com/i/c26006090318"],
+  "海滩": ["https://www.sourcesplash.com/i/ef232f769b59","https://www.sourcesplash.com/i/d23cb78aadfc"],
+  "森林": ["https://www.sourcesplash.com/i/d75c7050baae","https://www.sourcesplash.com/i/af8ffa346a51"],
+  "田园风景": ["https://www.sourcesplash.com/i/3498dca4c9e0","https://www.sourcesplash.com/i/8f6c6a8c24cc"],
+  "秋景": ["https://www.sourcesplash.com/i/948d7c533599","https://www.sourcesplash.com/i/b8c0e1d23383"]
+};
 
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <a href="#" class="nav-home"><span class="ic-home"></span> CC0首页</a>
-    <div class="section-title">图片素材</div>
-    <nav class="cat-list">
-      <a href="#" class="active">山水</a>
-      <a href="#">自然</a>
-      <a href="#">季节</a>
-      <a href="#">植物</a>
-      <a href="#">风景</a>
-      <a href="#">物件</a>
-      <a href="#">美食</a>
-      <a href="#">节庆</a>
-      <a href="#">动植物</a>
-      <a href="#">建筑</a>
-      <a href="#">动物</a>
-      <a href="#">交通</a>
-      <a href="#">运动</a>
-      <a href="#">人物</a>
-      <a href="#">更多</a>
-    </nav>
-  </aside>
+const sidebarCategories = ["山水","自然","季节","植物","风景","物件","美食","节庆","动植物","建筑","动物","交通","运动","人物","更多"];
+const topTags = ["热门","林荫道","平原","秋天稻田","山的图片","花海","山峰","雪山","农业风光","绿色植被","草地","树林","海滩","森林","田园风景","秋景"];
 
-  <!-- Main -->
-  <main class="main">
-    <!-- Category Tabs -->
-    <div class="cat-tabs">
-      <a href="#" class="active">热门</a>
-      <a href="#">林荫道</a>
-      <a href="#">平原</a>
-      <a href="#">秋天稻田</a>
-      <a href="#">山的图片</a>
-      <a href="#">花海</a>
-      <a href="#">山峰</a>
-      <a href="#">雪山</a>
-      <a href="#">农业风光</a>
-      <a href="#">绿色植被</a>
-      <a href="#">草地</a>
-      <a href="#">树林</a>
-      <a href="#">海滩</a>
-      <a href="#">森林</a>
-      <a href="#">田园风景</a>
-      <a href="#">秋景</a>
+// ========== USER SYSTEM ==========
+const USER_KEY = 'cc0_users';
+const CURRENT_KEY = 'cc0_currentUser';
+
+function getUsers() {
+  try { return JSON.parse(localStorage.getItem(USER_KEY)) || []; } catch { return []; }
+}
+function saveUsers(users) { localStorage.setItem(USER_KEY, JSON.stringify(users)); }
+function getCurrentUser() {
+  try { return JSON.parse(localStorage.getItem(CURRENT_KEY)) || null; } catch { return null; }
+}
+function setCurrentUser(user) {
+  localStorage.setItem(CURRENT_KEY, user ? JSON.stringify(user) : '');
+}
+function initAdmin() {
+  const users = getUsers();
+  if (!users.find(u => u.username === 'admin')) {
+    users.push({ username: 'admin', password: '123456', email: 'admin@cc0.cn', isAdmin: true, createdAt: Date.now() });
+    saveUsers(users);
+  }
+}
+
+// ========== ROUTER ==========
+let currentView = 'login';
+let selectedCategory = null;
+
+function navigate(view, data) {
+  currentView = view;
+  if (data) selectedCategory = data;
+  render();
+}
+
+// ========== RENDER ==========
+function render() {
+  const app = document.getElementById('app');
+  const user = getCurrentUser();
+
+  if (!user && currentView !== 'register' && currentView !== 'forgot') {
+    currentView = 'login';
+  }
+
+  switch (currentView) {
+    case 'login': app.innerHTML = renderLogin(); break;
+    case 'register': app.innerHTML = renderRegister(); break;
+    case 'forgot': app.innerHTML = renderForgot(); break;
+    case 'home': app.innerHTML = renderHome(); break;
+    case 'category': app.innerHTML = renderCategory(); break;
+  }
+
+  attachListeners();
+}
+
+function renderLogin() {
+  return `
+  <div class="auth-page">
+    <div class="auth-card">
+      <h2>欢迎回来</h2>
+      <p class="subtitle">登录 CC0.CN 图片素材库</p>
+      <div class="success-msg" id="loginSuccess"></div>
+      <div class="form-group">
+        <label>用户名</label>
+        <input type="text" id="loginUser" placeholder="请输入用户名" value="admin">
+        <div class="error-msg" id="errUser"></div>
+      </div>
+      <div class="form-group">
+        <label>密码</label>
+        <input type="password" id="loginPass" placeholder="请输入密码" value="123456">
+        <div class="error-msg" id="errPass"></div>
+      </div>
+      <button class="btn-primary" id="btnLogin">登 录</button>
+      <div class="auth-links">
+        <a href="javascript:navigate('register')">注册新账号</a>
+        <a href="javascript:navigate('forgot')">忘记密码?</a>
+      </div>
     </div>
+  </div>`;
+}
 
-    <!-- Grid -->
-    <div class="grid">
-
-      <div class="card featured">
-        <div class="card-img" style="background-image:url('https://picsum.photos/seed/mountain1/1200/800')"></div>
-        <div class="card-body">
-          <div class="card-title">山峰云海意境风景背景图片</div>
-          <div class="card-meta">
-            <span class="badge">PIXABAY</span>
-            <span class="size">6269×3555 PX</span>
-          </div>
-        </div>
+function renderRegister() {
+  return `
+  <div class="auth-page">
+    <div class="auth-card">
+      <h2>创建账号</h2>
+      <p class="subtitle">加入 CC0.CN 免费图片社区</p>
+      <div class="success-msg" id="regSuccess"></div>
+      <div class="form-group">
+        <label>用户名</label>
+        <input type="text" id="regUser" placeholder="3-20位字母数字">
+        <div class="error-msg" id="errRegUser"></div>
       </div>
-
-      <div class="card">
-        <div class="card-img" style="background-image:url('https://picsum.photos/seed/coast2/600/400')"></div>
-        <div class="card-body">
-          <div class="card-title">大海淘海风景</div>
-          <div class="card-meta">
-            <span class="badge">PIXABAY</span>
-            <span class="size">2300×1533 PX</span>
-          </div>
-        </div>
+      <div class="form-group">
+        <label>邮箱</label>
+        <input type="email" id="regEmail" placeholder="用于找回密码">
+        <div class="error-msg" id="errRegEmail"></div>
       </div>
-
-      <div class="card">
-        <div class="card-img" style="background-image:url('https://picsum.photos/seed/beach3/600/400')"></div>
-        <div class="card-body">
-          <div class="card-title">航拍大海海岸</div>
-          <div class="card-meta">
-            <span class="badge">PIXABAY</span>
-            <span class="size">3992×2992 PX</span>
-          </div>
-        </div>
+      <div class="form-group">
+        <label>密码</label>
+        <input type="password" id="regPass" placeholder="至少6位">
+        <div class="error-msg" id="errRegPass"></div>
       </div>
-
-      <div class="card">
-        <div class="card-img" style="background-image:url('https://picsum.photos/seed/marsh4/600/400')"></div>
-        <div class="card-body">
-          <div class="card-title">沼泽风景</div>
-          <div class="card-meta">
-            <span class="badge">PIXABAY</span>
-            <span class="size">5184×3456 PX</span>
-          </div>
-        </div>
+      <div class="form-group">
+        <label>确认密码</label>
+        <input type="password" id="regPass2" placeholder="再次输入密码">
+        <div class="error-msg" id="errRegPass2"></div>
       </div>
-
-      <div class="card">
-        <div class="card-img" style="background-image:url('https://picsum.photos/seed/bridge5/600/400')"></div>
-        <div class="card-body">
-          <div class="card-title">萨摩亚度假村村海上的栈桥</div>
-          <div class="card-meta">
-            <span class="badge">PIXABAY</span>
-            <span class="size">5292×3485 PX</span>
-          </div>
-        </div>
+      <button class="btn-primary" id="btnRegister">注 册</button>
+      <div class="auth-links">
+        <a href="javascript:navigate('login')">已有账号? 去登录</a>
       </div>
-
-      <div class="card">
-        <div class="card-img" style="background-image:url('https://picsum.photos/seed/sunset6/600/400')"></div>
-        <div class="card-body">
-          <div class="card-title">海上日出阳光</div>
-          <div class="card-meta">
-            <span class="badge">PIXABAY</span>
-            <span class="size">7952×5304 PX</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-img" style="background-image:url('https://picsum.photos/seed/winter7/600/400')"></div>
-        <div class="card-body">
-          <div class="card-title">冬天平静的湖边与湖畔的树</div>
-          <div class="card-meta">
-            <span class="badge">PIXABAY</span>
-            <span class="size">4698×2932 PX</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-img" style="background-image:url('https://picsum.photos/seed/lake8/600/400')"></div>
-        <div class="card-body">
-          <div class="card-title">湖岸的树林风景</div>
-          <div class="card-meta">
-            <span class="badge">PIXABAY</span>
-            <span class="size">2580×1701 PX</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-img" style="background-image:url('https://picsum.photos/seed/countryside9/600/400')"></div>
-        <div class="card-body">
-          <div class="card-title">春天的农村田园风景</div>
-          <div class="card-meta">
-            <span class="badge">PIXABAY</span>
-            <span class="size">5184×3456 PX</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-img" style="background-image:url('https://picsum.photos/seed/lake10/600/400')"></div>
-        <div class="card-body">
-          <div class="card-title">福尔瑟姆湖水库风景</div>
-          <div class="card-meta">
-            <span class="badge">PIXABAY</span>
-            <span class="size">3456×1820 PX</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-img" style="background-image:url('https://picsum.photos/seed/autumn11/600/400')"></div>
-        <div class="card-body">
-          <div class="card-title">秋天的河流与晚霞风景</div>
-          <div class="card-meta">
-            <span class="badge">PIXABAY</span>
-            <span class="size">1920×1232 PX</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-img" style="background-image:url('https://picsum.photos/seed/canyon12/600/400')"></div>
-        <div class="card-body">
-          <div class="card-title">游乐园的草坪与铁轨轨道风景</div>
-          <div class="card-meta">
-            <span class="badge">PIXABAY</span>
-            <span class="size">5919×3329 PX</span>
-          </div>
-        </div>
-      </div>
-
     </div>
+  </div>`;
+}
 
-    <!-- Footer -->
-    <div class="footer">
-      <div class="links">
-        <a href="#">关于我们</a>
-        <a href="#">联系方式</a>
-        <a href="#">投稿协议</a>
-        <a href="#">版权声明</a>
-        <a href="#">友情链接</a>
+function renderForgot() {
+  return `
+  <div class="auth-page">
+    <div class="auth-card">
+      <h2>找回密码</h2>
+      <p class="subtitle">通过用户名和邮箱重置密码</p>
+      <div class="success-msg" id="forgotSuccess"></div>
+      <div class="form-group">
+        <label>用户名</label>
+        <input type="text" id="forgotUser" placeholder="请输入用户名">
+        <div class="error-msg" id="errForgotUser"></div>
       </div>
-      <div>Copyright © 2024 CC0.CN - 版权免费素材图片网站</div>
+      <div class="form-group">
+        <label>注册邮箱</label>
+        <input type="email" id="forgotEmail" placeholder="请输入注册时的邮箱">
+        <div class="error-msg" id="errForgotEmail"></div>
+      </div>
+      <div class="form-group">
+        <label>新密码</label>
+        <input type="password" id="forgotPass" placeholder="设置新密码">
+        <div class="error-msg" id="errForgotPass"></div>
+      </div>
+      <button class="btn-primary" id="btnForgot">重置密码</button>
+      <div class="auth-links">
+        <a href="javascript:navigate('login')">返回登录</a>
+      </div>
     </div>
+  </div>`;
+}
 
-  </main>
-</div>
+function renderHome() {
+  const user = getCurrentUser();
+  let sidebarHtml = sidebarCategories.map(c =>
+    `<div class="cat-item ${selectedCategory === c ? 'active' : ''}" data-cat="${c}">${c}</div>`
+  ).join('');
 
+  let tagsHtml = topTags.map(t =>
+    `<span class="tag ${selectedCategory === t ? 'active' : ''}" data-tag="${t}">${t}</span>`
+  ).join('');
+
+  // Build all sections
+  let allSections = '';
+  const allCats = [...sidebarCategories, ...topTags];
+  allCats.forEach(cat => {
+    const imgs = imageData[cat] || [];
+    if (imgs.length === 0) return;
+    allSections += `
+    <div class="home-cat-section">
+      <div class="cat-header">
+        <h3>${cat}</h3>
+        <span class="view-all" data-cat="${cat}">查看全部 →</span>
+      </div>
+      <div class="mini-grid">
+        ${imgs.map((url, i) => `
+          <div class="mini-card" data-cat="${cat}">
+            <div class="img" style="background-image:url('${url}')"></div>
+            <div class="meta">${cat} 图片 ${i+1}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>`;
+  });
+
+  return `
+  <div class="app-container active">
+    <div class="topbar">
+      <div class="logo-wrap">
+        <div class="logo-box">CC</div>
+        <div class="logo-text">
+          <div class="main">0.CN</div>
+          <div class="sub">版权免费商用图片网站</div>
+        </div>
+      </div>
+      <div class="top-links">
+        <div class="user-info">
+          <span>你好, ${user ? user.username : '访客'}</span>
+          <button class="logout-btn" id="btnLogout">退出</button>
+        </div>
+      </div>
+    </div>
+    <div class="main-layout">
+      <div class="sidebar">
+        <div class="sidebar-nav">
+          <a href="javascript:navigate('home')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            CC0首页
+          </a>
+        </div>
+        <div class="sidebar-section-title">图片素材</div>
+        <div class="cat-grid">${sidebarHtml}</div>
+      </div>
+      <div class="content-area">
+        <div class="tag-bar">${tagsHtml}</div>
+        <div class="section-title">全部分类</div>
+        ${allSections}
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderCategory() {
+  const user = getCurrentUser();
+  const cat = selectedCategory || '热门';
+  const imgs = imageData[cat] || [];
+
+  let sidebarHtml = sidebarCategories.map(c =>
+    `<div class="cat-item ${cat === c ? 'active' : ''}" data-cat="${c}">${c}</div>`
+  ).join('');
+
+  let tagsHtml = topTags.map(t =>
+    `<span class="tag ${cat === t ? 'active' : ''}" data-tag="${t}">${t}</span>`
+  ).join('');
+
+  return `
+  <div class="app-container active">
+    <div class="topbar">
+      <div class="logo-wrap">
+        <div class="logo-box">CC</div>
+        <div class="logo-text">
+          <div class="main">0.CN</div>
+          <div class="sub">版权免费商用图片网站</div>
+        </div>
+      </div>
+      <div class="top-links">
+        <div class="user-info">
+          <span>你好, ${user ? user.username : '访客'}</span>
+          <button class="logout-btn" id="btnLogout">退出</button>
+        </div>
+      </div>
+    </div>
+    <div class="main-layout">
+      <div class="sidebar">
+        <div class="sidebar-nav">
+          <a href="javascript:navigate('home')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            CC0首页
+          </a>
+        </div>
+        <div class="sidebar-section-title">图片素材</div>
+        <div class="cat-grid">${sidebarHtml}</div>
+      </div>
+      <div class="content-area">
+        <div class="tag-bar">${tagsHtml}</div>
+        <div class="cat-detail active">
+          <div class="cat-detail-header">
+            <button class="back-btn" id="btnBack">← 返回首页</button>
+            <h2>${cat}</h2>
+          </div>
+          <div class="detail-grid">
+            ${imgs.map((url, i) => `
+              <div class="detail-card">
+                <div class="img-wrap" style="background-image:url('${url}')"></div>
+                <div class="info">
+                  <h3>${cat} 精选图片 ${i+1}</h3>
+                  <p>PIXABAY • 高清素材</p>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ========== EVENT LISTENERS ==========
+function attachListeners() {
+  if (currentView === 'login') {
+    document.getElementById('btnLogin').addEventListener('click', doLogin);
+    document.getElementById('loginPass').addEventListener('keypress', e => { if (e.key === 'Enter') doLogin(); });
+  }
+  if (currentView === 'register') {
+    document.getElementById('btnRegister').addEventListener('click', doRegister);
+  }
+  if (currentView === 'forgot') {
+    document.getElementById('btnForgot').addEventListener('click', doForgot);
+  }
+  if (currentView === 'home' || currentView === 'category') {
+    document.getElementById('btnLogout')?.addEventListener('click', doLogout);
+    document.getElementById('btnBack')?.addEventListener('click', () => navigate('home'));
+
+    document.querySelectorAll('.cat-item').forEach(el => {
+      el.addEventListener('click', () => {
+        const cat = el.getAttribute('data-cat');
+        navigate('category', cat);
+      });
+    });
+
+    document.querySelectorAll('.tag').forEach(el => {
+      el.addEventListener('click', () => {
+        const tag = el.getAttribute('data-tag');
+        navigate('category', tag);
+      });
+    });
+
+    document.querySelectorAll('.view-all').forEach(el => {
+      el.addEventListener('click', () => {
+        const cat = el.getAttribute('data-cat');
+        navigate('category', cat);
+      });
+    });
+
+    document.querySelectorAll('.mini-card').forEach(el => {
+      el.addEventListener('click', () => {
+        const cat = el.getAttribute('data-cat');
+        navigate('category', cat);
+      });
+    });
+  }
+}
+
+// ========== ACTIONS ==========
+function doLogin() {
+  const user = document.getElementById('loginUser').value.trim();
+  const pass = document.getElementById('loginPass').value;
+  const errUser = document.getElementById('errUser');
+  const errPass = document.getElementById('errPass');
+
+  errUser.style.display = errPass.style.display = 'none';
+
+  if (!user) { errUser.textContent = '请输入用户名'; errUser.style.display = 'block'; return; }
+  if (!pass) { errPass.textContent = '请输入密码'; errPass.style.display = 'block'; return; }
+
+  const users = getUsers();
+  const found = users.find(u => u.username === user && u.password === pass);
+  if (!found) {
+    errPass.textContent = '用户名或密码错误';
+    errPass.style.display = 'block';
+    return;
+  }
+
+  setCurrentUser(found);
+  const succ = document.getElementById('loginSuccess');
+  succ.textContent = '登录成功，正在跳转...';
+  succ.style.display = 'block';
+  setTimeout(() => navigate('home'), 600);
+}
+
+function doRegister() {
+  const user = document.getElementById('regUser').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const pass = document.getElementById('regPass').value;
+  const pass2 = document.getElementById('regPass2').value;
+
+  document.getElementById('errRegUser').style.display = 'none';
+  document.getElementById('errRegEmail').style.display = 'none';
+  document.getElementById('errRegPass').style.display = 'none';
+  document.getElementById('errRegPass2').style.display = 'none';
+
+  let ok = true;
+  if (!user || user.length < 3 || user.length > 20) {
+    document.getElementById('errRegUser').textContent = '用户名需3-20位';
+    document.getElementById('errRegUser').style.display = 'block';
+    ok = false;
+  }
+  const users = getUsers();
+  if (users.find(u => u.username === user)) {
+    document.getElementById('errRegUser').textContent = '用户名已存在';
+    document.getElementById('errRegUser').style.display = 'block';
+    ok = false;
+  }
+  if (!email || !email.includes('@')) {
+    document.getElementById('errRegEmail').textContent = '请输入有效邮箱';
+    document.getElementById('errRegEmail').style.display = 'block';
+    ok = false;
+  }
+  if (!pass || pass.length < 6) {
+    document.getElementById('errRegPass').textContent = '密码至少6位';
+    document.getElementById('errRegPass').style.display = 'block';
+    ok = false;
+  }
+  if (pass !== pass2) {
+    document.getElementById('errRegPass2').textContent = '两次密码不一致';
+    document.getElementById('errRegPass2').style.display = 'block';
+    ok = false;
+  }
+  if (!ok) return;
+
+  users.push({ username: user, password: pass, email: email, createdAt: Date.now() });
+  saveUsers(users);
+
+  const succ = document.getElementById('regSuccess');
+  succ.textContent = '注册成功！请登录';
+  succ.style.display = 'block';
+  setTimeout(() => navigate('login'), 1200);
+}
+
+function doForgot() {
+  const user = document.getElementById('forgotUser').value.trim();
+  const email = document.getElementById('forgotEmail').value.trim();
+  const pass = document.getElementById('forgotPass').value;
+
+  document.getElementById('errForgotUser').style.display = 'none';
+  document.getElementById('errForgotEmail').style.display = 'none';
+  document.getElementById('errForgotPass').style.display = 'none';
+
+  let ok = true;
+  if (!user) {
+    document.getElementById('errForgotUser').textContent = '请输入用户名';
+    document.getElementById('errForgotUser').style.display = 'block';
+    ok = false;
+  }
+  if (!email) {
+    document.getElementById('errForgotEmail').textContent = '请输入邮箱';
+    document.getElementById('errForgotEmail').style.display = 'block';
+    ok = false;
+  }
+  if (!pass || pass.length < 6) {
+    document.getElementById('errForgotPass').textContent = '新密码至少6位';
+    document.getElementById('errForgotPass').style.display = 'block';
+    ok = false;
+  }
+  if (!ok) return;
+
+  const users = getUsers();
+  const idx = users.findIndex(u => u.username === user && u.email === email);
+  if (idx === -1) {
+    document.getElementById('errForgotEmail').textContent = '用户名与邮箱不匹配';
+    document.getElementById('errForgotEmail').style.display = 'block';
+    return;
+  }
+
+  users[idx].password = pass;
+  saveUsers(users);
+
+  const succ = document.getElementById('forgotSuccess');
+  succ.textContent = '密码重置成功！请登录';
+  succ.style.display = 'block';
+  setTimeout(() => navigate('login'), 1200);
+}
+
+function doLogout() {
+  setCurrentUser(null);
+  navigate('login');
+}
+
+// ========== INIT ==========
+initAdmin();
+render();
+</script>
 </body>
 </html>
