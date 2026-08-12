@@ -1,0 +1,8 @@
+{
+  "appId": "com.iphbw.app",
+  "appName": "CC0图片素材",
+  "webDir": ".",
+  "server": {
+    "androidScheme": "https"
+  }
+}
