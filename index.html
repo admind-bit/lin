@@ -2,7 +2,14 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#ff4d2e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="CC0图片">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
 <title>CC0.CN - 免费商用图片素材</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -388,11 +395,174 @@
     font-size: 12px; color: #666;
   }
 
+  /* ===== Mobile Elements (hidden on desktop) ===== */
+  .menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 40px; height: 40px;
+    background: none; border: none;
+    cursor: pointer; padding: 8px;
+  }
+  .menu-toggle span {
+    display: block; width: 22px; height: 2px;
+    background: #333; border-radius: 2px;
+    transition: transform .3s, opacity .3s;
+  }
+  .menu-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .menu-toggle.open span:nth-child(2) { opacity: 0; }
+  .menu-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .mobile-drawer {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    width: 260px;
+    background: #fff;
+    z-index: 200;
+    transform: translateX(-100%);
+    transition: transform .3s ease;
+    overflow-y: auto;
+    padding-top: 60px;
+    box-shadow: 2px 0 16px rgba(0,0,0,0.15);
+  }
+  .mobile-drawer.open { transform: translateX(0); }
+  .drawer-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 150;
+    opacity: 0;
+    transition: opacity .3s;
+  }
+  .drawer-overlay.show { display: block; opacity: 1; }
+  .mobile-drawer .drawer-header {
+    padding: 16px;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 15px; font-weight: 700; color: #333;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .mobile-drawer .drawer-header::before {
+    content: ''; width: 4px; height: 16px;
+    background: #ff4d2e; border-radius: 2px;
+  }
+  .mobile-drawer .drawer-cat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px; padding: 12px 16px;
+  }
+  .mobile-drawer .drawer-cat-grid .cat-item {
+    padding: 10px 0;
+    text-align: center;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #555;
+    cursor: pointer;
+    background: #f9f9f9;
+  }
+  .mobile-drawer .drawer-cat-grid .cat-item.active {
+    background: #ff4d2e; color: #fff;
+  }
+
+  .bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: #fff;
+    border-top: 1px solid #f0f0f0;
+    z-index: 100;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .bottom-nav-inner {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 56px;
+  }
+  .bottom-nav-item {
+    display: flex; flex-direction: column;
+    align-items: center; gap: 2px;
+    font-size: 11px; color: #999;
+    cursor: pointer; padding: 6px 16px;
+    border: none; background: none;
+  }
+  .bottom-nav-item.active { color: #ff4d2e; }
+  .bottom-nav-item svg { width: 22px; height: 22px; }
+
+  /* ===== Mobile Responsive ===== */
   @media (max-width: 900px) {
+    .menu-toggle { display: flex; }
     .sidebar { display: none; }
-    .content-area { margin-left: 0; }
-    .mini-grid { grid-template-columns: repeat(2, 1fr); }
-    .detail-grid { grid-template-columns: 1fr; }
+    .mobile-drawer { display: block; }
+    .bottom-nav { display: block; }
+    .content-area {
+      margin-left: 0;
+      padding: 12px 12px 80px;
+    }
+    .topbar {
+      padding: 0 12px;
+      height: 50px;
+      padding-top: env(safe-area-inset-top);
+      height: calc(50px + env(safe-area-inset-top));
+    }
+    .logo-box { width: 28px; height: 28px; font-size: 10px; }
+    .logo-text .main { font-size: 15px; }
+    .logo-text .sub { display: none; }
+    .top-links .user-info span { display: none; }
+    .top-links .logout-btn { font-size: 11px; padding: 4px 10px; }
+
+    .tag-bar {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      flex-wrap: nowrap;
+      gap: 6px;
+      margin-bottom: 14px;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+    .tag-bar::-webkit-scrollbar { display: none; }
+    .tag-bar .tag {
+      padding: 6px 12px;
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+
+    .section-title { font-size: 16px; margin: 18px 0 10px; }
+    .home-cat-section { margin-bottom: 16px; }
+    .home-cat-section .cat-header h3 { font-size: 14px; }
+    .mini-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .mini-card .meta { font-size: 11px; padding: 6px 8px; }
+
+    .gallery {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .gallery .card-body { padding: 8px 10px; }
+    .gallery .card-title { font-size: 12px; }
+    .gallery .card-meta { font-size: 11px; }
+
+    .detail-grid { grid-template-columns: 1fr; gap: 14px; }
+    .cat-detail-header h2 { font-size: 17px; }
+    .cat-detail-header .back-btn { font-size: 12px; padding: 5px 10px; }
+    .detail-card .info { padding: 12px; }
+    .detail-card .info h3 { font-size: 14px; }
+
+    .auth-card {
+      margin: 16px;
+      padding: 28px 20px;
+      max-width: none;
+    }
+    .auth-card h2 { font-size: 22px; }
+  }
+
+  @media (max-width: 380px) {
+    .mini-grid { grid-template-columns: 1fr; }
+    .gallery { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -615,8 +785,13 @@ function renderHome() {
     </div>`;
   });
 
+  let drawerHtml = sidebarCategories.map(c =>
+    `<div class="cat-item ${selectedCategory === c ? 'active' : ''}" data-cat="${c}">${c}</div>`
+  ).join('');
+
   return `
   <div class="app-container active">
+    <button class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
     <div class="topbar">
       <div class="logo-wrap">
         <div class="logo-box">CC</div>
@@ -631,6 +806,11 @@ function renderHome() {
           <button class="logout-btn" id="btnLogout">退出</button>
         </div>
       </div>
+    </div>
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+    <div class="mobile-drawer" id="mobileDrawer">
+      <div class="drawer-header">图片素材分类</div>
+      <div class="drawer-cat-grid">${drawerHtml}</div>
     </div>
     <div class="main-layout">
       <div class="sidebar">
@@ -649,6 +829,22 @@ function renderHome() {
         ${allSections}
       </div>
     </div>
+    <div class="bottom-nav">
+      <div class="bottom-nav-inner">
+        <button class="bottom-nav-item active" id="navHome">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          首页
+        </button>
+        <button class="bottom-nav-item" id="navCat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          分类
+        </button>
+        <button class="bottom-nav-item" id="navLogout">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          退出
+        </button>
+      </div>
+    </div>
   </div>`;
 }
 
@@ -665,8 +861,13 @@ function renderCategory() {
     `<span class="tag ${cat === t ? 'active' : ''}" data-tag="${t}">${t}</span>`
   ).join('');
 
+  let drawerHtml = sidebarCategories.map(c =>
+    `<div class="cat-item ${cat === c ? 'active' : ''}" data-cat="${c}">${c}</div>`
+  ).join('');
+
   return `
   <div class="app-container active">
+    <button class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
     <div class="topbar">
       <div class="logo-wrap">
         <div class="logo-box">CC</div>
@@ -681,6 +882,11 @@ function renderCategory() {
           <button class="logout-btn" id="btnLogout">退出</button>
         </div>
       </div>
+    </div>
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+    <div class="mobile-drawer" id="mobileDrawer">
+      <div class="drawer-header">图片素材分类</div>
+      <div class="drawer-cat-grid">${drawerHtml}</div>
     </div>
     <div class="main-layout">
       <div class="sidebar">
@@ -714,6 +920,22 @@ function renderCategory() {
         </div>
       </div>
     </div>
+    <div class="bottom-nav">
+      <div class="bottom-nav-inner">
+        <button class="bottom-nav-item" id="navHome">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          首页
+        </button>
+        <button class="bottom-nav-item active" id="navCat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          分类
+        </button>
+        <button class="bottom-nav-item" id="navLogout">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          退出
+        </button>
+      </div>
+    </div>
   </div>`;
 }
 
@@ -733,9 +955,19 @@ function attachListeners() {
     document.getElementById('btnLogout')?.addEventListener('click', doLogout);
     document.getElementById('btnBack')?.addEventListener('click', () => navigate('home'));
 
+    // Mobile drawer toggle
+    document.getElementById('menuToggle')?.addEventListener('click', toggleDrawer);
+    document.getElementById('drawerOverlay')?.addEventListener('click', closeDrawer);
+
+    // Bottom nav
+    document.getElementById('navHome')?.addEventListener('click', () => { closeDrawer(); navigate('home'); });
+    document.getElementById('navCat')?.addEventListener('click', toggleDrawer);
+    document.getElementById('navLogout')?.addEventListener('click', doLogout);
+
     document.querySelectorAll('.cat-item').forEach(el => {
       el.addEventListener('click', () => {
         const cat = el.getAttribute('data-cat');
+        closeDrawer();
         navigate('category', cat);
       });
     });
@@ -888,9 +1120,35 @@ function doLogout() {
   navigate('login');
 }
 
+// ========== MOBILE DRAWER ==========
+function toggleDrawer() {
+  const drawer = document.getElementById('mobileDrawer');
+  const overlay = document.getElementById('drawerOverlay');
+  const toggle = document.getElementById('menuToggle');
+  if (!drawer) return;
+  const isOpen = drawer.classList.contains('open');
+  if (isOpen) { closeDrawer(); } else {
+    drawer.classList.add('open');
+    overlay?.classList.add('show');
+    toggle?.classList.add('open');
+  }
+}
+function closeDrawer() {
+  document.getElementById('mobileDrawer')?.classList.remove('open');
+  document.getElementById('drawerOverlay')?.classList.remove('show');
+  document.getElementById('menuToggle')?.classList.remove('open');
+}
+
 // ========== INIT ==========
 initAdmin();
 render();
+
+// ========== SERVICE WORKER ==========
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  });
+}
 </script>
 </body>
 </html>
